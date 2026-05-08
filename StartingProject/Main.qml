@@ -1,4 +1,3 @@
-
 // Copyright (C) 2026 Qt Group.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 import QtQuick
@@ -22,9 +21,7 @@ Window {
         anchors.margins: 15
         radius: 15
         property bool detailson: false
-        onDetailsonChanged :
-            console.log("details chanded to: ", detailson)
-
+        onDetailsonChanged: console.log("details chanded to: ", detailson)
 
         Text {
             id: nameField
@@ -47,34 +44,94 @@ Window {
             y: parent.y + 10
         }
 
-        Text {
-            id: companyField
-            text: myContactInfo.company
-            font.pointSize: 24
-            anchors.top : nameField.bottom
+        Rectangle {
+            id: basicInfoRect
+            anchors.top: nameField.bottom
             anchors.left: parent.left
+            visible: !mainRect.detailson
 
             anchors.margins: 20
-
+            Text {
+                id: companyField
+                text: myContactInfo.company
+                font.pointSize: 24
+                anchors.left: parent.left
+                anchors.top: parent.top
+            }
+            Text {
+                id: occupationField
+                text: myContactInfo.occupation
+                font.pointSize: 24
+                anchors.left: parent.left
+                anchors.top: companyField.bottom
+            }
         }
 
-        Rectangle
-        {
+        Rectangle {
+            id: detailedInfoRect
+            anchors.top: nameField.bottom
+            anchors.left: parent.left
+            visible: !basicInfoRect.visible
+
+            anchors.margins: 20
+            Text {
+                id: countryField
+                text: myContactInfo.country
+                font.pointSize: 24
+                anchors.left: parent.left
+                anchors.top: parent.top
+            }
+            Text {
+                id: addressField
+                text: myContactInfo.address
+                font.pointSize: 24
+                anchors.left: parent.left
+                anchors.top: countryField.bottom
+            }
+
+            Text {
+                id: phoneField
+                text: myContactInfo.phone
+                font.pointSize: 20
+                anchors.left: parent.left
+                anchors.top: addressField.bottom
+            }
+
+            Text {
+                id: emailField
+                text: myContactInfo.email
+                font.pointSize: 20
+                anchors.left: parent.left
+                anchors.top: phoneField.bottom
+            }
+
+            Text {
+                id: webSiteField
+                text: myContactInfo.webSite
+                font.pointSize: 20
+                anchors.left: parent.left
+                anchors.top: emailField.bottom
+            }
+        }
+
+        Rectangle {
             id: detailsButton
-            border.color:  "black"
+            border.color: "black"
             radius: 20
-            width: parent.width*0.2
-            height: width*0.4
+            width: parent.width * 0.2
+            height: width * 0.4
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             anchors.margins: 20
             Text {
-                anchors.centerIn:  parent
+                anchors.centerIn: parent
                 text: "Details"
             }
             MouseArea {
-                anchors.fill : parent
-                onClicked: {mainRect.detailson = !mainRect.detailson}
+                anchors.fill: parent
+                onClicked: {
+                    mainRect.detailson = !mainRect.detailson
+                }
             }
         }
     }
